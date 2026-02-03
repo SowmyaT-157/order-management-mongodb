@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "dotenv-cli": "^11.0.0",
+    "express": "^5.2.1",
+    "mongodb": "^7.0.0",
+    "mongoose": "^9.1.5"
+  },
+  "name": "order_management",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "@types/express": "^5.0.6"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "dotenv node dist/src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

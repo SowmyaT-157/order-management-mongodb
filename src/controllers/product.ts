@@ -1,5 +1,5 @@
 import { Request,Response } from "express"
-import { getAllProducts, newProduct } from "../services/product"
+import { createOrder, getAllProducts, newProduct } from "../services/product"
 
 export const createNewProduct = async (req: Request, res: Response) => {
     try {
@@ -35,3 +35,20 @@ export const getProducts = async (req: Request, res: Response) => {
     }
 };
 
+export const createNewOrder = async (req: Request, res: Response) => {
+    try {
+        console.log("enter try block..")
+        const newOrderData = req.body
+        console.log(newOrderData,"data req coming")
+        const newOrder = await createOrder(newOrderData)
+         console.log(newOrder,"product dta")
+        if (newOrder) {
+            return res.status(201).json({ message: "successfully created",newOrder})
+        } else {
+          
+            return res.status(404).json({ message: "please enter proper product data" })
+        }
+    } catch (error) {
+        return res.status(500).json({ message: "network issue", error })
+    }
+}

@@ -47,3 +47,7 @@ export const cancelTheOrder = async (order_id: string) => {
 };
 
 }
+
+export const getTheOrders = async () => {
+    return await Orders.find({ is_active: 'active' });
+};

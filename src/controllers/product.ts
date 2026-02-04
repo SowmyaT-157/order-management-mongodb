@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { createOrder, getAllProducts, newProduct } from "../services/product"
+import { cancelTheOrder, createOrder, getAllProducts, newProduct } from "../services/product"
 
 export const createNewProduct = async (req: Request, res: Response) => {
     try {
@@ -48,5 +48,24 @@ export const createNewOrder = async (req: Request, res: Response) => {
         }
     } catch (error) {
         return res.status(500).json({ message: "Internal Error", error });
+    }
+};
+
+
+export const failedOrder = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params; 
+        if (!id) {
+            return res.status(400).json({ message: "bad request, please provide id" });
+        }
+        const cancelledOrder = await cancelTheOrder(id.toString());
+
+        if (!cancelledOrder) {
+            return res.status(404).json({ message: "Order is not there in the orders list"});
+        }
+        return res.status(200).json({ message: "Order cancelled and stock restored",cancelledOrder});
+
+    } catch (error) {
+        return res.status(500).json({ message: "Error cancelling order",error});
     }
 };

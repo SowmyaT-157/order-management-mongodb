@@ -31,3 +31,19 @@ export const createOrder = async (newOrderData: orderType) => {
   }
 };
 
+export const cancelTheOrder = async (order_id: string) => {
+    const orderData = await Orders.findOneAndUpdate(
+        { _id: order_id, is_active: 'active' },
+        { $set: { is_active: 'cancelled' } },
+        { new: true }
+    );
+    if (!orderData){
+      console.log("order cancelled")
+    }else{
+      const updatedOrder = await Product.updateOne(
+        { _id: orderData.product_id },
+        { $inc: { quantity: orderData.order_quantity } })
+    return updatedOrder;
+};
+
+}

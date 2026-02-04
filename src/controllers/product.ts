@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { cancelTheOrder, createOrder, getAllProducts, newProduct } from "../services/product"
+import { cancelTheOrder, createOrder, getAllProducts, getTheOrders, newProduct } from "../services/product"
 
 export const createNewProduct = async (req: Request, res: Response) => {
     try {
@@ -67,5 +67,23 @@ export const failedOrder = async (req: Request, res: Response) => {
 
     } catch (error) {
         return res.status(500).json({ message: "Error cancelling order",error});
+    }
+};
+
+
+export const getactiveOrders = async (req: Request, res: Response) => {
+
+    try {
+        console.log("enter try block..");
+        const ordersList = await getTheOrders();
+       
+        if (!ordersList) {
+            console.log(ordersList, "comming if condition");
+            return res.status(404).json({ message: "data is not there" });
+        } else {
+            return res.status(200).json({ message: "fetched the data", ordersList });
+        }
+    } catch {
+        return res.status(400).json({ message: "data is not fetching" });
     }
 };

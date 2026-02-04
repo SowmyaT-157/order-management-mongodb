@@ -56,11 +56,9 @@ export const getTheOrders = async () => {
 
 
 
-export const getReportStats = async () => {
-   
+export const getRevenueAmount = async () => {
     const revenueData = await Orders.aggregate([
         { $match: { is_active: "active" } }, 
-        
         { 
             $group: { 
                 _id: null, 
@@ -70,3 +68,20 @@ export const getReportStats = async () => {
     ]);
  return revenueData
 }
+
+
+
+export const getTopSelling = async () =>{
+  const topSelling = await Orders.aggregate([
+    {$match: {is_active:"active"}},
+    {$group:{
+      _id:"product_id",
+      total_count : {$sum:"$order_quantity"}
+    }},
+    {$sort:({"total_amount":-1})},
+    {$limit:3}
+  ])
+  return topSelling
+}
+
+

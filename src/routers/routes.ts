@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {  createNewOrder, createNewProduct, failedOrder, getactiveOrders, getProducts,  } from "../controllers/product";
+import {  createNewOrder, createNewProduct, failedOrder, getactiveOrders, getProducts, getRevenue,  } from "../controllers/product";
 
 export const router = Router();
 router.post('/createProduct',createNewProduct);
@@ -7,3 +7,4 @@ router.get('/getAllProducts',getProducts);
 router.post('/createOrder', createNewOrder);
 router.put('/cancelOrder/:id', failedOrder);
 router.get('/getTasks',getactiveOrders);
+router.get('/getAmount', getRevenue);

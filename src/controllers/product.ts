@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { cancelTheOrder, createOrder, getAllProducts, getReportStats, getTheOrders, newProduct } from "../services/product"
+import { cancelTheOrder, createOrder, getAllProducts, getRevenueAmount, getTheOrders, getTopSelling, newProduct } from "../services/product"
 
 export const createNewProduct = async (req: Request, res: Response) => {
     try {
@@ -95,13 +95,29 @@ export const getRevenue = async (req: Request, res: Response) => {
 
     try {
         console.log("enter try block..");
-        const revenueAmount = await getReportStats();
+        const revenueAmount = await getRevenueAmount();
         console.log("revenue amount..",)
         if (revenueAmount){
             console.log(revenueAmount, "comming if condition");
             return res.status(200).json({ message: "fetched the data", revenueAmount });
         } else {
              return res.status(404).json({ message: "data is not there" });
+        }
+    } catch {
+        return res.status(400).json({ message: "data is not fetching" });
+    }
+};
+
+export const getTopSellingData = async (req: Request, res: Response) => {
+
+    try {
+        console.log("enter try block..");
+        const topProducts = await getTopSelling();
+        console.log("revenue amount..",)
+        if (!topProducts){
+            return res.status(404).json({ message: "data is not there" });
+        } else {
+             return res.status(200).json({ message: "fetched the data", topProducts });
         }
     } catch {
         return res.status(400).json({ message: "data is not fetching" });

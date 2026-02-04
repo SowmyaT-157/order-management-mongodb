@@ -1,4 +1,4 @@
-import { Request,Response } from "express"
+import { Request, Response } from "express"
 import { createOrder, getAllProducts, newProduct } from "../services/product"
 
 export const createNewProduct = async (req: Request, res: Response) => {
@@ -6,11 +6,11 @@ export const createNewProduct = async (req: Request, res: Response) => {
         console.log("enter try block..")
         const productsData = req.body
         const newProductData = await newProduct(productsData)
-         console.log(newProductData,"product dta")
+        console.log(newProductData, "product dta")
         if (!newProductData) {
             return res.status(404).json({ message: "please enter proper product data" })
         } else {
-           return res.status(201).json({ message: "successfully created",newProductData})
+            return res.status(201).json({ message: "successfully created", newProductData })
         }
     } catch (error) {
         return res.status(500).json({ message: "network issue", error })
@@ -19,13 +19,13 @@ export const createNewProduct = async (req: Request, res: Response) => {
 
 
 export const getProducts = async (req: Request, res: Response) => {
-    
+
     try {
         console.log("enter try block..");
         const dataOfProduct = await getAllProducts();
-        console.log(dataOfProduct,"product data..");
+        console.log(dataOfProduct, "product data..");
         if (!dataOfProduct) {
-            console.log(dataOfProduct,"comming if condition");
+            console.log(dataOfProduct, "comming if condition");
             return res.status(404).json({ message: "data is not there" });
         } else {
             return res.status(200).json({ message: "fetched the data", dataOfProduct });
@@ -35,20 +35,18 @@ export const getProducts = async (req: Request, res: Response) => {
     }
 };
 
+
+
 export const createNewOrder = async (req: Request, res: Response) => {
     try {
-        console.log("enter try block..")
-        const newOrderData = req.body
-        console.log(newOrderData,"data req coming")
-        const newOrder = await createOrder(newOrderData)
-         console.log(newOrder,"product dta")
+        const newOrder = await createOrder(req.body);
+
         if (newOrder) {
-            return res.status(201).json({ message: "successfully created",newOrder})
+            return res.status(201).json({ message: "successfully created" });
         } else {
-          
-            return res.status(404).json({ message: "please enter proper product data" })
+            return res.status(400).json({  message: "Stock insufficient or Product not found" });
         }
     } catch (error) {
-        return res.status(500).json({ message: "network issue", error })
+        return res.status(500).json({ message: "Internal Error", error });
     }
-}
+};

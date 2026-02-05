@@ -4,6 +4,6 @@ import { createNewOrder, failedOrder, getactiveOrders, getRevenue, getTopSelling
 export const OrderRouter = Router();
 OrderRouter.post('/createOrder', createNewOrder);
 OrderRouter.put('/cancelOrder/:id', failedOrder);
-OrderRouter.get('/getTasks',getactiveOrders);
+OrderRouter.get('/getOrders',getactiveOrders);
 OrderRouter.get('/getAmount', getRevenue);
 OrderRouter.get('/getSellingData', getTopSellingData); 

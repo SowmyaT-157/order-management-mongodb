@@ -5,11 +5,9 @@ import { cancelTheOrder, createOrder, getRevenueAmount, getTheOrders, getTopSell
 
 export const createNewOrder = async (req: Request, res: Response) => {
     try {
-        console.log("entered try block")
+        
         const newOrder = await createOrder(req.body);
-        console.log("entered into try..block",newOrder)
         if (newOrder) {
-            console.log("data in if block",newOrder)
             return res.status(201).json({ message: "successfully created" });
         } else {
             return res.status(400).json({  message: "Stock insufficient or Product not found" });

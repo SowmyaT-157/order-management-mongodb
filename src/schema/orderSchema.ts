@@ -11,6 +11,10 @@ export const orderSchema = new mongoose.Schema({
         require:true,
         min:0
     },
+    order_amount:{
+        type:Number,
+        require:true
+    },
     is_active: {
        type:String,
        require:true,

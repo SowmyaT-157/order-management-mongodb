@@ -13,6 +13,6 @@ export const productSchema = new mongoose.Schema({
     quantity: {
         type:Number,
         require:true,
-        min:0
+        min:0, 
     }
 })

@@ -6,4 +6,4 @@ OrderRouter.post('/createOrder', createNewOrder);
 OrderRouter.put('/cancelOrder/:id', failedOrder);
 OrderRouter.get('/getTasks',getactiveOrders);
 OrderRouter.get('/getAmount', getRevenue);
-OrderRouter.get('/getSellingData', getTopSellingData);
+OrderRouter.get('/getSellingData', getTopSellingData); 

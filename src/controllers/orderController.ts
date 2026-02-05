@@ -5,7 +5,6 @@ import { cancelTheOrder, createOrder, getRevenueAmount, getTheOrders, getTopSell
 
 export const createNewOrder = async (req: Request, res: Response) => {
     try {
-        
         const newOrder = await createOrder(req.body);
         if (newOrder) {
             return res.status(201).json({ message: "successfully created" });
@@ -42,7 +41,6 @@ export const getactiveOrders = async (req: Request, res: Response) => {
     try {
         console.log("enter try block..");
         const ordersList = await getTheOrders();
-       
         if (!ordersList) {
             console.log(ordersList, "comming if condition");
             return res.status(404).json({ message: "data is not there" });

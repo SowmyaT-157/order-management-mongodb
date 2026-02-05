@@ -1,15 +1,17 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { router } from './routers/routes';
+import { router } from './routers/productRoutes';
+import { OrderRouter } from './routers/ordersRouter';
 
 
 mongoose.connect("mongodb://localhost:27017/order_managements")
     const app = express();
     app.use(express.json());
     app.use("/", router)
+    app.use("/",OrderRouter)
     const PORT = process.env.PORT
 
-
+    
     app.listen(PORT, () => {
     console.log(`Server running on ${PORT}`);
 });

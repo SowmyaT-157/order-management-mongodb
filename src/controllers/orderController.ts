@@ -1,46 +1,11 @@
-import { Request, Response } from "express"
-import { cancelTheOrder, createOrder, getAllProducts, getTheOrders, newProduct } from "../services/product"
-
-export const createNewProduct = async (req: Request, res: Response) => {
-    try {
-        console.log("enter try block..")
-        const productsData = req.body
-        const newProductData = await newProduct(productsData)
-        console.log(newProductData, "product dta")
-        if (!newProductData) {
-            return res.status(404).json({ message: "please enter proper product data" })
-        } else {
-            return res.status(201).json({ message: "successfully created", newProductData })
-        }
-    } catch (error) {
-        return res.status(500).json({ message: "network issue", error })
-    }
-}
-
-
-export const getProducts = async (req: Request, res: Response) => {
-
-    try {
-        console.log("enter try block..");
-        const dataOfProduct = await getAllProducts();
-        console.log(dataOfProduct, "product data..");
-        if (!dataOfProduct) {
-            console.log(dataOfProduct, "comming if condition");
-            return res.status(404).json({ message: "data is not there" });
-        } else {
-            return res.status(200).json({ message: "fetched the data", dataOfProduct });
-        }
-    } catch {
-        return res.status(400).json({ message: "data is not fetching" });
-    }
-};
+import { Request, Response } from "express";
+import { cancelTheOrder, createOrder, getRevenueAmount, getTheOrders, getTopSelling } from "../services/orders";
 
 
 
 export const createNewOrder = async (req: Request, res: Response) => {
     try {
         const newOrder = await createOrder(req.body);
-
         if (newOrder) {
             return res.status(201).json({ message: "successfully created" });
         } else {
@@ -50,6 +15,7 @@ export const createNewOrder = async (req: Request, res: Response) => {
         return res.status(500).json({ message: "Internal Error", error });
     }
 };
+
 
 
 export const failedOrder = async (req: Request, res: Response) => {
@@ -72,16 +38,48 @@ export const failedOrder = async (req: Request, res: Response) => {
 
 
 export const getactiveOrders = async (req: Request, res: Response) => {
-
     try {
         console.log("enter try block..");
         const ordersList = await getTheOrders();
-       
         if (!ordersList) {
             console.log(ordersList, "comming if condition");
             return res.status(404).json({ message: "data is not there" });
         } else {
             return res.status(200).json({ message: "fetched the data", ordersList });
+        }
+    } catch {
+        return res.status(400).json({ message: "data is not fetching" });
+    }
+};
+
+
+export const getRevenue = async (req: Request, res: Response) => {
+    try {
+        console.log("enter try block..");
+        const revenueAmount = await getRevenueAmount();
+        console.log("revenue amount..",)
+        if (revenueAmount){
+            console.log(revenueAmount, "comming if condition");
+            return res.status(200).json({ message: "fetched the data", revenueAmount });
+        } else {
+             return res.status(404).json({ message: "data is not there" });
+        }
+    } catch {
+        return res.status(400).json({ message: "data is not fetching" });
+    }
+};
+
+
+
+export const getTopSellingData = async (req: Request, res: Response) => {
+    try {
+        console.log("enter try block..");
+        const topProducts = await getTopSelling();
+        console.log("revenue amount..",)
+        if (!topProducts){
+            return res.status(404).json({ message: "data is not there" });
+        } else {
+             return res.status(200).json({ message: "fetched the data", topProducts });
         }
     } catch {
         return res.status(400).json({ message: "data is not fetching" });
